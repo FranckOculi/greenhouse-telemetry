@@ -1,13 +1,16 @@
 CXX = g++
-CFLAGS = -Wall -Wextra
+CXXFLAGS = -Wall -Wextra
+TEMPERATURE_SRC = src/sensors/temperature
 
-sensor-temperature: src/main.o src/sensors/temperature/driver.o src/sensors/temperature/sensor.o
-	$(CXX) $(CGLAGS) -o $@ $^
+all: sensor-temperature
 
-%.o: src/%.cpp src/sensors/temperature/%.cpp
-	$(CXX) $(CGLAGS) -o $@ -c $^
+sensor-temperature: src/main.o $(TEMPERATURE_SRC)/driver.o $(TEMPERATURE_SRC)/sensor.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -rf src/*.o src/sensors/temperature/*.o
+	rm -f sensor-temperature src/*.o $(TEMPERATURE_SRC)/*.o
 
-.PHONY: clean
+.PHONY: all clean
