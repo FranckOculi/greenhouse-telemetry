@@ -12,4 +12,5 @@ class TemperatureSensor {
         ITemperatureDriver& _driver;
 };
 
+
 #endif
