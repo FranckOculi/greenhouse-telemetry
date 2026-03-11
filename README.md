@@ -10,10 +10,14 @@ As the project is still in progress:
 - MQTT is used for publishing sensor data, with Mosquitto as the broker.
 
 Currently, Greenhouse includes:
-- Sensor drivers with interface classes, e.g., humidity_driver, temperature_driver.
-- Simulated sensors for testing the system without hardware.
-- MQTT publisher using Paho MQTT C++.
-- A test `main` program that continuously publishes sensor data to a broker.
+- Sensor stack :
+  - Sensor drivers with interface classes, e.g., humidity_driver, temperature_driver.
+  - Simulated sensors for testing the system without hardware.
+  - MQTT publisher using Paho MQTT C++ to publish sensor data.
+  - A test `main` program that continuously publishes sensor data to a broker.
+- A server stack :
+  - MQTTSubscribers using Paho MQTT C++ to receive sensor data.
+  - A test `main` program that continuously displays sensor readings received from the broker.
 
 ## :hammer_and_wrench: Requirements
 - g++
@@ -49,9 +53,9 @@ Sensors will push their random values to the broker.
 -   [x] Create sensor stack (interface, driver and class) for embedded devices
 -   [x] Implement publisher feature for sensors (MQTT)
 -   [ ] Create server stack :
-        - Broker setup
-        - Subscriber server to collect and store sensor data
--   [ ] Create persistence for sensor data
+    - [x] Subscriber server
+    - [ ] Sensor data persistence
+    - [ ] Broker setup
 -   [ ] Add Dashboard for visualising metrics
 -   [ ] Implement error handling and logging
 -   [ ] Optimize embedded code base for embedded runtime
