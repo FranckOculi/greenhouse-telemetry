@@ -1,8 +1,8 @@
-#include "sensors/temperature/temperature_driver.hpp"
-#include "sensors/temperature/temperature_sensor.hpp"
-#include "sensors/humidity/humidity_driver.hpp"
-#include "sensors/humidity/humidity_sensor.hpp"
-#include "sensors/MQTT/MQTTPublisher.hpp"
+#include "temperature/temperature_driver.hpp"
+#include "temperature/temperature_sensor.hpp"
+#include "humidity/humidity_driver.hpp"
+#include "humidity/humidity_sensor.hpp"
+#include "MQTT/MQTTPublisher.hpp"
 
 #include <iostream>
 #include <csignal>

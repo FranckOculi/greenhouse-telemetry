@@ -2,15 +2,16 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra
 LIBS = -lpaho-mqttpp3 -lpaho-mqtt3c -pthread
 
-TEMPERATURE_SRC = src/sensors/temperature
-HUMIDITY_SRC = src/sensors/humidity
-MQTT_SRC = src/sensors/MQTT
-SENSORS_SRC = src/main.o \
-$(TEMPERATURE_SRC)/temperature_driver.o \
-$(TEMPERATURE_SRC)/temperature_sensor.o \
-$(HUMIDITY_SRC)/humidity_driver.o \
-$(HUMIDITY_SRC)/humidity_sensor.o \
-$(MQTT_SRC)/MQTTPublisher.o
+SENSORS_PATH = src/sensors
+TEMPERATURE_PATH = $(SENSORS_PATH)/temperature
+HUMIDITY_PATH = $(SENSORS_PATH)/humidity
+MQTT_PATH = $(SENSORS_PATH)/MQTT
+SENSORS_SRC = $(SENSORS_PATH)/main.o \
+$(TEMPERATURE_PATH)/temperature_driver.o \
+$(TEMPERATURE_PATH)/temperature_sensor.o \
+$(HUMIDITY_PATH)/humidity_driver.o \
+$(HUMIDITY_PATH)/humidity_sensor.o \
+$(MQTT_PATH)/MQTTPublisher.o
 
 sensors: $(SENSORS_SRC)
 	$(CXX) $(CXXFLAGS) $^ -o $@  $(LIBS)
@@ -19,6 +20,6 @@ sensors: $(SENSORS_SRC)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f sensors src/*.o $(TEMPERATURE_SRC)/*.o $(HUMIDITY_SRC)/*.o $(MQTT_SRC)/*.o
+	rm -f sensors src/main.o $(SENSORS_PATH)/*.o $(TEMPERATURE_PATH)/*.o $(HUMIDITY_PATH)/*.o $(MQTT_PATH)/*.o
 
 .PHONY: clean
