@@ -62,15 +62,13 @@ mosquitto -t humidity -v
 - Sensors will push their random values to the broker.
 - The server will store sensor metrics to the database.
 
-<br/>
-
 ## :building_construction: TODO
 -   [x] Create sensor stack (interface, driver and class) for embedded devices
 -   [x] Implement publisher feature for sensors (MQTT)
 -   [ ] Create server stack :
     - [x] Subscriber server
     - [x] Sensor data persistence
-    - [ ] Broker setup
+    - [x] Broker setup
 -   [ ] Add Dashboard for visualising metrics
 -   [ ] Implement error handling and logging
 -   [ ] Optimize embedded code base for embedded runtime

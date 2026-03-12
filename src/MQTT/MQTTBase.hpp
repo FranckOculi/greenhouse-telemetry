@@ -16,6 +16,8 @@ class MQTTBase {
 
         static const std::string ADDRESS;
 
+        static int QOS;
+
         MQTTBase(const std::string& address, const std::string& client_id, const std::string& topic);
         ~MQTTBase();
 

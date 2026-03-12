@@ -7,6 +7,8 @@ const std::string MQTTBase::HUMIDITY = "humidity";
 
 const std::string MQTTBase::ADDRESS = "tcp://localhost:1883";
 
+int MQTTBase::QOS = 1;
+
 MQTTBase::MQTTBase(const std::string& address, const std::string& client_id, const std::string& topic) 
 : client(address, client_id), topic(topic) {}
 

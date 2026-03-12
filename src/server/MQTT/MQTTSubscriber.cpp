@@ -39,7 +39,7 @@ MQTTSubscriber::MQTTSubscriber(const std::string& address, const std::string& cl
 void MQTTSubscriber::subscribe() {
     try {
         std::cout << "[INFO] " << topic << " -> Subscribing to " << topic << std::endl;
-        client.subscribe(topic, 1)->wait();
+        client.subscribe(topic, MQTTSubscriber::QOS)->wait();
         std::cout << "[INFO] " << topic << " -> Subscribed !" << std::endl;
     } catch (const mqtt::exception& exc) {
         std::cerr << "[ERROR] " << topic << " -> Connection failed " << exc.what() << std::endl;

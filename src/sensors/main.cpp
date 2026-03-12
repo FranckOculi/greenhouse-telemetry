@@ -32,10 +32,10 @@ int main(void) {
         std::cout << "[INFO] Waking up sensors..." << std::endl;
 
         std::string t_value = std::to_string(t_sensor.read());
-        t_publisher.publish(t_value, 1);
+        t_publisher.publish(t_value);
 
         std::string h_value = std::to_string(h_sensor.read());
-        h_publisher.publish(h_value, 1);
+        h_publisher.publish(h_value);
 
         std::cout << "[INFO] Going to sleep for 10 seconds..." << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(10));
