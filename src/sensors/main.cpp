@@ -12,8 +12,6 @@
 
 std::atomic<bool> stop(false);
 
-const std::string ADDRESS = "tcp://localhost:1883";
-
 void handle_signal(int) {
     stop = true;
 }
@@ -25,8 +23,8 @@ int main(void) {
     AHT20HumidityDriverSimulated h_driver;
     HumiditySensor h_sensor(h_driver);
 
-    MQTTPublisher t_publisher(ADDRESS, TemperatureSensor::SENSOR_ID, TemperatureSensor::SENSOR_NAME);
-    MQTTPublisher h_publisher(ADDRESS, HumiditySensor::SENSOR_ID, HumiditySensor::SENSOR_NAME);
+    MQTTPublisher t_publisher(MQTTPublisher::ADDRESS, MQTTPublisher::get_client_id(MQTTPublisher::SENSOR, MQTTPublisher::TEMPERATURE), MQTTPublisher::TEMPERATURE);
+    MQTTPublisher h_publisher(MQTTPublisher::ADDRESS, MQTTPublisher::get_client_id(MQTTPublisher::SENSOR, MQTTPublisher::HUMIDITY), MQTTPublisher::HUMIDITY);
 
     signal(SIGINT, handle_signal);
 

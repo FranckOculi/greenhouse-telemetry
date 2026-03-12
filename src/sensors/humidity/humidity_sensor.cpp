@@ -1,8 +1,5 @@
 #include "humidity_sensor.hpp"
 
-const std::string HumiditySensor::SENSOR_ID = "sensor/humidity";
-const std::string HumiditySensor::SENSOR_NAME = "humidity";
-
 HumiditySensor::HumiditySensor(IHumidityDriver& d) : _driver(d) {
     _driver.init();
 }

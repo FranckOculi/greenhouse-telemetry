@@ -1,8 +1,5 @@
 #include "temperature_sensor.hpp"
 
-const std::string TemperatureSensor::SENSOR_ID = "sensor/temperature";
-const std::string TemperatureSensor::SENSOR_NAME = "temperature";
-
 TemperatureSensor::TemperatureSensor(ITemperatureDriver& d) : _driver(d) {
     _driver.init();
 }
