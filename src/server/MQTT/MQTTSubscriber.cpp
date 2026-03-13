@@ -6,6 +6,16 @@
 #include <ctime>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <mutex>
+#include <optional>
+
+struct SensorCache {
+    std::optional<int> humidity;
+    std::optional<int> temperature;
+    std::mutex mtx;
+};
+
+SensorCache _cache;
 
 MQTTSubscriberCallback::MQTTSubscriberCallback(DatabaseService db) : _db(db) {}
 
@@ -19,14 +29,40 @@ void MQTTSubscriberCallback::message_arrived(mqtt::const_message_ptr msg) {
 
     std::cout << msg->get_topic() << " -> " << msg->to_string() << std::endl;
 
-    try {
-        std::cout << "Registering value\n";
-        std::string payload = msg->get_payload();
-        int value = std::stoi(payload);
-        _db.insert(msg->get_topic(), value);
-        std::cout << "Value registered\n";
-    } catch (std::exception& exc) {
-        std::cerr << "[ERROR] -> Registration failed " << exc.what() << std::endl;
+    std::string payload = msg->get_payload();
+    int value = std::stoi(payload);
+    
+    std::lock_guard<std::mutex> lock(_cache.mtx);
+    if (msg->get_topic() == "temperature") {
+        _cache.temperature = value;
+    } else if (msg->get_topic() == "humidity") {
+        _cache.humidity = value;
+    }
+
+    if (_cache.humidity.has_value() && _cache.temperature.has_value()) {
+        try {
+            std::cout << "Registering value\n";
+
+            DatabaseService::Raw h {
+                "humidity",
+                _cache.humidity.value()
+            };
+
+            DatabaseService::Raw t {
+                "temperature",
+                _cache.temperature.value()
+            };
+
+            _db.insert("sensors", h, t);
+            std::cout << "Value registered\n";
+
+            _cache.humidity.reset();
+            _cache.temperature.reset();
+        } catch (std::exception& exc) {
+            std::cerr << "[ERROR] -> Registration failed " << exc.what() << std::endl;
+            _cache.humidity.reset();
+            _cache.temperature.reset();
+        }
     }
 }
 

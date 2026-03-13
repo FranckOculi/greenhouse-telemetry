@@ -8,10 +8,11 @@ const std::string DatabaseService::NAME = "sensors";
 
 DatabaseService::DatabaseService(const std::string& host, const int port, const std::string& name) : _si(host, port, name) {}
 
-void DatabaseService::insert(const std::string& field, int& value) {
+void DatabaseService::insert(const std::string& meas, Raw& raw1, Raw& raw2) {
     influxdb_cpp::builder()
-        .meas(field)
-        .field(field, value)
+        .meas(meas)
+        .field(raw1.field, raw1.value)
+        .field(raw2.field, raw2.value)
         .post_http(_si);
 }
 
@@ -35,8 +36,3 @@ void DatabaseService::read(std::string data) {
         std::cout << std::endl;
     }
 }
-
-
-
-
-
