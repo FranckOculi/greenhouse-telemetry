@@ -1,3 +1,4 @@
 /sensors
 /server
 *.o
+.env

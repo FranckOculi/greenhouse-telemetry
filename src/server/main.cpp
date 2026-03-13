@@ -1,6 +1,7 @@
 #include "MQTT/MQTTSubscriber.hpp"
 #include "db/database_service.hpp"
 
+#include <laserpants/dotenv.h>
 #include <iostream>
 #include <csignal>
 #include <atomic>
@@ -14,6 +15,7 @@ void handle_signal(int) {
 }
 
 int main(void) {
+    dotenv::init();
     DatabaseService db(DatabaseService::HOST, DatabaseService::PORT, DatabaseService::NAME);
 
     MQTTSubscriber h_subscriber(MQTTSubscriber::ADDRESS, MQTTSubscriber::get_client_id(MQTTSubscriber::SERVER, MQTTSubscriber::HUMIDITY), MQTTSubscriber::HUMIDITY, db);

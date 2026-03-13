@@ -6,7 +6,8 @@ const std::string DatabaseService::HOST = "127.0.0.1";
 int DatabaseService::PORT = 8086;
 const std::string DatabaseService::NAME = "sensors";
 
-DatabaseService::DatabaseService(const std::string& host, const int port, const std::string& name) : _si(host, port, name) {}
+DatabaseService::DatabaseService(const std::string& host, const int port, const std::string& name)
+: _si(host, port, name, std::getenv("DATABASE_USERNAME"), std::getenv("DATABASE_TOKEN")) {}
 
 void DatabaseService::insert(const std::string& meas, Raw& raw1, Raw& raw2) {
     influxdb_cpp::builder()
