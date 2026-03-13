@@ -2,12 +2,25 @@
 #include "nlohmann/json.hpp"
 #include <iostream>
 
-const std::string DatabaseService::HOST = "127.0.0.1";
-int DatabaseService::PORT = 8086;
-const std::string DatabaseService::NAME = "sensors";
-
 DatabaseService::DatabaseService(const std::string& host, const int port, const std::string& name)
-: _si(host, port, name, std::getenv("DATABASE_USERNAME"), std::getenv("DATABASE_TOKEN")) {}
+: _si(host, port, name, std::getenv("DATABASE_USERNAME"), std::getenv("DATABASE_TOKEN")) {
+    std::string query = "select * from " + name;
+    if (select(query).find("database not found") != std::string::npos) {
+        std::cout << "No database found for : " << name << std::endl;
+        create(name);
+    }
+}
+
+void DatabaseService::create(std::string name) {
+    std::cout << "Creating database : " << name << std::endl;
+    std::string res;
+    influxdb_cpp::create_db(res, name, _si);
+    if (res.find("database not found") != std::string::npos) {
+        std::runtime_error("database not found");
+    }
+    
+    std::cout << "Database created!\n";
+}
 
 void DatabaseService::insert(const std::string& meas, Raw& raw1, Raw& raw2) {
     influxdb_cpp::builder()

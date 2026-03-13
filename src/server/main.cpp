@@ -16,7 +16,7 @@ void handle_signal(int) {
 
 int main(void) {
     dotenv::init();
-    DatabaseService db(DatabaseService::HOST, DatabaseService::PORT, DatabaseService::NAME);
+    DatabaseService db;
 
     MQTTSubscriber h_subscriber(MQTTSubscriber::ADDRESS, MQTTSubscriber::get_client_id(MQTTSubscriber::SERVER, MQTTSubscriber::HUMIDITY), MQTTSubscriber::HUMIDITY, db);
     MQTTSubscriber t_subscriber(MQTTSubscriber::ADDRESS, MQTTSubscriber::get_client_id(MQTTSubscriber::SERVER, MQTTSubscriber::TEMPERATURE), MQTTSubscriber::TEMPERATURE, db);

@@ -53,7 +53,7 @@ void MQTTSubscriberCallback::message_arrived(mqtt::const_message_ptr msg) {
                 _cache.temperature.value()
             };
 
-            _db.insert(DatabaseService::NAME, h, t);
+            _db.insert("sensors", h, t);
             std::cout << "Value registered\n";
 
             _cache.humidity.reset();

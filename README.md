@@ -29,7 +29,7 @@ The goal is to create an application to monitor greenhouse sensors, such as temp
 - Make
 - Paho MQTT C++
 - Mosquitto (MQTT broker) for testing
-- InfluxDB
+- InfluxDB V1.x
 - Grafana to monitor metrics
 
 ## :rocket: Usage
